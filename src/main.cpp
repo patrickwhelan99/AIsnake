@@ -67,7 +67,7 @@ int main()
 {
 
     sf::Vector2f windowSize(800, 800);
-    sf::RenderWindow app(sf::VideoMode(windowSize.x, windowSize.y), "No step on snek!");
+    sf::RenderWindow app(sf::VideoMode(windowSize.x, windowSize.y), "No step on snek!", sf::Style::Resize);
 
 
     sf::RectangleShape bg(windowSize);
@@ -108,6 +108,13 @@ int main()
             if (event.type == sf::Event::Closed)
                 app.close();
 
+	    if (event.type == sf::Event::Resized)
+	    {
+        	// update the view to the new size of the window
+	        sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+        	app.setView(sf::View(visibleArea));
+	    }
+
             if (event.type == sf::Event::KeyReleased)
             {
                 switch(event.key.code)
@@ -143,7 +150,7 @@ int main()
 
         }
 
-        tick(app, bg, p, generationText, font);
+//        tick(app, bg, p, generationText, font);
 
         duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
